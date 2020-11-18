@@ -1,35 +1,35 @@
 import sys
-import errno
+from scutils import apply_ordering
 
 inputfile = sys.argv[1]
-if sys.argv[2] == "a":
+if sys.argv[2] == "nd":
     reverse = False
-elif sys.argv[2] == "d":
+elif sys.argv[2] == "ni":
     reverse = True
 else:
-    print("a: Non-decreasing d: Non-increasing")
+    print("nd: Non-decreasing ni: Non-increasing")
     sys.exit(1)
 
+outputfile = sys.argv[3]
+
 nvertices = 0
+nedges = 0
 degrees = []
 
+# find degree ordering
 with open(inputfile, "r") as f:
     toks = f.readline().split()
     nvertices = int(toks[0])
+    nedges = int(toks[1])
 
     for u in range(0,nvertices):
         toks = f.readline().split()
-        degrees.append(len(toks) - 1)
+        nneighbors = len(toks) - 1
+        degrees.append(nneighbors)
 
-# vertex non-decreasing degree-ordering
+# sort vertices according to the degree ordering
 degree_ordering = list(range(0, nvertices))
 degree_ordering.sort(key = lambda u: degrees[u], reverse = reverse)
 del degrees
 
-# write ordering (old rank -> new rank)
-try:
-    for u in range(0, nvertices):
-        sys.stdout.write("%d %d\n" % (degree_ordering[u], u))
-except IOError as e:
-    if e.errno == errno.EPIPE:
-        pass
+apply_ordering(inputfile, outputfile, degree_ordering)
