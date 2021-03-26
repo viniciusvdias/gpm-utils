@@ -62,6 +62,7 @@ def apply_ordering(inputfile, outputfile, ordering):
 
                 fout.write(" %d,%d" % (v, e))
                 if len(neighbor_toks) > 2:
+                    fout.write(",")
                     fout.write(",".join(neighbor_toks[2:]))
             fout.write("\n")
 
