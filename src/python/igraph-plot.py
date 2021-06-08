@@ -4,6 +4,8 @@ import random as rd
 
 # edges=[(0,1),(1,2),(1,3),(1,4),(1,5)],vlabels=[1,1,1,1,1,1],elabels=[1,1,1,1,1]
 
+print(sys.argv)
+
 pattern_str = sys.argv[1]
 g = ig.Graph()
 
