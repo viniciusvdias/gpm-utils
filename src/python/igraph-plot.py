@@ -28,7 +28,7 @@ for edge_str in edges_str.split("),("):
 # vlabels
 vlabels_str = pattern_str.split(",vlabels=")[1].split(",elabels=")[0]
 vlabels_str = vlabels_str[1:-1]
-vlabels = [int(l) for l in vlabels_str.split(",")]
+vlabels = list(enumerate([int(l) for l in vlabels_str.split(",")]))
 
 # elabels
 elabels_str = pattern_str.split(",elabels=")[1]
@@ -49,7 +49,7 @@ g.vs["label"] = vlabels
 g.es["label"] = elabels
 rd.seed(0)
 rd.shuffle(colors)
-g.vs["color"] = [colors[vlabels[i]] for i in range(nvertices)]
+g.vs["color"] = [colors[vlabels[i][1]] for i in range(nvertices)]
 rd.shuffle(colors)
 g.es["color"] = [colors[elabels[i]] for i in range(len(elabels))]
 ig.plot(g)
